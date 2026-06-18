@@ -97,7 +97,7 @@
     font-size: 14px;
     border-radius: 5px;
     resize: both;
-    overflow: auto;
+    overflow: hidden;
     box-shadow: 0 0 15px 5px rgba(0,0,0,0.2);
     left: 3rem;
     top: 4rem;
@@ -111,11 +111,12 @@
 
   .window .header {
     padding: 0.5rem;
-    cursor: default;
+    cursor: move;
     background: rgba(47,53,56,0.95);
     border-bottom: 1px solid #22c9e8;
     position: relative;
     flex-shrink: 0;
+    user-select: none;
   }
   .window .header h1 {
     text-align: center;
@@ -200,6 +201,7 @@
     padding: 20px;
     display: none;
     min-width: 400px;
+    max-width: 90%;
     box-shadow: 0 0 30px rgba(0,0,0,0.8);
   }
   #search-box.show { display: block; }
@@ -393,6 +395,7 @@
     color: #ddd;
     font-size: 12px;
     margin-top: 3px;
+    word-break: break-all;
   }
 
   /* top-left apple menu (hidden by default) */
@@ -535,6 +538,7 @@
     width: 150px;
     margin-left: -75px;
     text-align: center;
+    z-index: 1000;
   }
   .dock li:hover em { display: block; }
   .dock li .indicator {
@@ -638,7 +642,7 @@
     padding: 15px;
     border-radius: 5px;
     max-width: 300px;
-    z-index: 9998;
+    z-index: 9997;
     animation: slideIn 0.3s ease-out;
   }
   @keyframes slideIn {
@@ -713,36 +717,36 @@
     </div>
 
     <div class="content" id="home-content">
-      <div class="file-item folder" role="button" tabindex="0" data-path="documents" data-size="2.5 MB">
+      <div class="file-item folder" role="button" tabindex="0" data-path="documents" data-size="2.5 MB" data-type="Folder">
         <div class="icon"><i class="fa fa-folder"></i></div>
         <div class="text">Documents</div>
       </div>
-      <div class="file-item folder" role="button" tabindex="0" data-path="music" data-size="5.2 GB">
+      <div class="file-item folder" role="button" tabindex="0" data-path="music" data-size="5.2 GB" data-type="Folder">
         <div class="icon"><i class="fa fa-music"></i></div>
         <div class="text">Music</div>
       </div>
-      <div class="file-item folder" role="button" tabindex="0" data-path="pictures" data-size="8.1 GB">
+      <div class="file-item folder" role="button" tabindex="0" data-path="pictures" data-size="8.1 GB" data-type="Folder">
         <div class="icon"><i class="fa fa-camera"></i></div>
         <div class="text">Pictures</div>
       </div>
-      <div class="file-item folder" role="button" tabindex="0" data-path="videos" data-size="15.3 GB">
+      <div class="file-item folder" role="button" tabindex="0" data-path="videos" data-size="15.3 GB" data-type="Folder">
         <div class="icon"><i class="fa fa-video-camera"></i></div>
         <div class="text">Videos</div>
       </div>
-      <div class="file-item" role="button" tabindex="0" data-path="specs.pdf" data-size="2.4 MB">
+      <div class="file-item" role="button" tabindex="0" data-path="specs.pdf" data-size="2.4 MB" data-type="PDF">
         <div class="icon"><i class="fa fa-file-pdf-o"></i></div>
         <div class="text">specs.pdf</div>
       </div>
-      <div class="file-item" role="button" tabindex="0" data-path="plan.xls" data-size="145 KB">
+      <div class="file-item" role="button" tabindex="0" data-path="plan.xls" data-size="145 KB" data-type="Excel">
         <div class="icon"><i class="fa fa-file-excel-o"></i></div>
         <div class="text">plan.xls</div>
       </div>
-      <div class="file-item" role="button" tabindex="0" data-path="stuff.zip" data-size="12.8 MB">
+      <div class="file-item" role="button" tabindex="0" data-path="stuff.zip" data-size="12.8 MB" data-type="Archive">
         <div class="icon"><i class="fa fa-file-archive-o"></i></div>
         <div class="text">stuff.zip</div>
         <div class="badge">!</div>
       </div>
-      <div class="file-item" role="button" tabindex="0" data-path="project.js" data-size="89 KB">
+      <div class="file-item" role="button" tabindex="0" data-path="project.js" data-size="89 KB" data-type="JavaScript">
         <div class="icon"><i class="fa fa-file-code-o"></i></div>
         <div class="text">project.js</div>
       </div>
@@ -952,7 +956,7 @@
 </footer>
 
 <script>
-  // Enhanced macOS Finder Mockup with all 15 features
+  // Enhanced macOS Finder Mockup with all 15 features - FIXED VERSION
   (function () {
     // ============ Utilities ============
     function pad(n){ return n < 10 ? '0'+n : n; }
@@ -966,10 +970,10 @@
 
     // Store file items for reuse
     const fileItems = [
-      { name: 'Documents', size: '2.5 MB', type: 'folder', icon: 'fa-folder' },
-      { name: 'Music', size: '5.2 GB', type: 'folder', icon: 'fa-music' },
-      { name: 'Pictures', size: '8.1 GB', type: 'folder', icon: 'fa-camera' },
-      { name: 'Videos', size: '15.3 GB', type: 'folder', icon: 'fa-video-camera' },
+      { name: 'Documents', size: '2.5 MB', type: 'Folder', icon: 'fa-folder' },
+      { name: 'Music', size: '5.2 GB', type: 'Folder', icon: 'fa-music' },
+      { name: 'Pictures', size: '8.1 GB', type: 'Folder', icon: 'fa-camera' },
+      { name: 'Videos', size: '15.3 GB', type: 'Folder', icon: 'fa-video-camera' },
       { name: 'specs.pdf', size: '2.4 MB', type: 'PDF', icon: 'fa-file-pdf-o' },
       { name: 'plan.xls', size: '145 KB', type: 'Excel', icon: 'fa-file-excel-o' },
       { name: 'stuff.zip', size: '12.8 MB', type: 'Archive', icon: 'fa-file-archive-o' },
@@ -993,7 +997,7 @@
     updateTime();
     setInterval(updateTime, 30 * 1000);
 
-    // ============ System Activity Monitor (Feature 5) ============
+    // ============ System Activity Monitor ============
     function updateSystemStats() {
       const cpu = Math.floor(Math.random() * 100);
       const mem = Math.floor(Math.random() * 100);
@@ -1014,14 +1018,14 @@
       updateSystemStats();
     });
 
-    // ============ Search Function (Feature 2) ============
+    // ============ Search Function ============
     const allFiles = fileItems.map(f => f.name).concat([
       'README.md', 'Config.json', 'Data.csv', 'Settings.ini', 'Archive.tar.gz'
     ]);
 
     document.getElementById('search-trigger').addEventListener('click', function() {
       document.getElementById('search-box').classList.toggle('show');
-      document.getElementById('search-input').focus();
+      setTimeout(() => document.getElementById('search-input').focus(), 100);
     });
 
     document.getElementById('search-input').addEventListener('input', function(e) {
@@ -1030,7 +1034,7 @@
       results.innerHTML = '';
 
       if (query.length > 0) {
-        const matches = allFiles.filter(f => f.toLowerCase().includes(query));
+        const matches = allFiles.filter(f => f.toLowerCase().includes(query)).slice(0, 10);
         matches.forEach(file => {
           const div = document.createElement('div');
           div.className = 'search-result';
@@ -1053,18 +1057,24 @@
       }
     });
 
-    // ============ Window Focus System (Feature 9) ============
+    // ============ Window Focus System ============
     function focusWindow(windowEl) {
       document.querySelectorAll('.window').forEach(w => w.classList.remove('focused'));
       if (windowEl) windowEl.classList.add('focused');
     }
 
-    // ============ Context Menu (Feature 7) ============
+    document.querySelectorAll('.window').forEach(win => {
+      win.addEventListener('mousedown', function() {
+        focusWindow(this);
+      });
+    });
+
+    // ============ Context Menu ============
     let selectedFile = null;
 
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
-      const fileItem = e.target.closest('.file-item');
+      const fileItem = e.target.closest('.file-item, .file-list-item');
       if (fileItem) {
         selectedFile = fileItem;
         const menu = document.getElementById('context-menu');
@@ -1074,22 +1084,26 @@
       }
     });
 
-    document.addEventListener('click', function() {
-      document.getElementById('context-menu').classList.remove('show');
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.context-menu')) {
+        document.getElementById('context-menu').classList.remove('show');
+      }
     });
 
     document.getElementById('ctx-open').addEventListener('click', () => {
       if (selectedFile) {
-        createNotification('Opening: ' + selectedFile.querySelector('.text').textContent);
+        const name = selectedFile.querySelector('.text, .name')?.textContent || 'file';
+        createNotification('Opening: ' + name);
       }
     });
 
     document.getElementById('ctx-edit').addEventListener('click', () => {
       if (selectedFile) {
-        const name = selectedFile.querySelector('.text').textContent;
+        const name = selectedFile.querySelector('.text, .name')?.textContent || 'Untitled';
         document.getElementById('editor-window').style.display = 'flex';
         document.getElementById('editor-dock').classList.add('running');
         document.getElementById('editor-header').querySelector('h1').textContent = 'TextEdit - ' + name;
+        focusWindow(document.getElementById('editor-window'));
       }
     });
 
@@ -1101,7 +1115,7 @@
 
     document.getElementById('ctx-delete').addEventListener('click', () => {
       if (selectedFile) {
-        const name = selectedFile.querySelector('.text').textContent;
+        const name = selectedFile.querySelector('.text, .name')?.textContent || 'file';
         selectedFile.remove();
         createNotification('Moved to Trash: ' + name);
       }
@@ -1109,15 +1123,17 @@
 
     document.getElementById('ctx-rename').addEventListener('click', () => {
       if (selectedFile) {
-        const newName = prompt('Rename file:', selectedFile.querySelector('.text').textContent);
-        if (newName) {
-          selectedFile.querySelector('.text').textContent = newName;
+        const oldName = selectedFile.querySelector('.text, .name')?.textContent || 'file';
+        const newName = prompt('Rename file:', oldName);
+        if (newName && newName.trim()) {
+          const textEl = selectedFile.querySelector('.text, .name');
+          if (textEl) textEl.textContent = newName;
           createNotification('Renamed to: ' + newName);
         }
       }
     });
 
-    // ============ View Modes (Feature 3) ============
+    // ============ View Modes ============
     function createIconView() {
       const content = document.getElementById('home-content');
       content.innerHTML = '';
@@ -1127,9 +1143,10 @@
 
       fileItems.forEach(item => {
         const div = document.createElement('div');
-        div.className = item.type === 'folder' ? 'file-item folder' : 'file-item';
+        div.className = item.type === 'Folder' ? 'file-item folder' : 'file-item';
         div.setAttribute('data-path', item.name.toLowerCase());
         div.setAttribute('data-size', item.size);
+        div.setAttribute('data-type', item.type);
         div.innerHTML = `
           <div class="icon"><i class="fa ${item.icon}"></i></div>
           <div class="text">${item.name}</div>
@@ -1170,17 +1187,17 @@
 
     document.getElementById('view-list').addEventListener('click', function() {
       document.getElementById('view-icon').classList.remove('active');
-      document.getElementById('view-list').classList.add('active');
+      this.classList.add('active');
       createListView();
     });
 
     document.getElementById('view-icon').addEventListener('click', function() {
       document.getElementById('view-list').classList.remove('active');
-      document.getElementById('view-icon').classList.add('active');
+      this.classList.add('active');
       createIconView();
     });
 
-    // ============ Sort Options (Feature 11) ============
+    // ============ Sort Options ============
     document.getElementById('sort-name').addEventListener('click', function() {
       fileItems.sort((a, b) => a.name.localeCompare(b.name));
       createIconView();
@@ -1188,12 +1205,16 @@
     });
 
     document.getElementById('sort-date').addEventListener('click', function() {
-      fileItems.sort((a, b) => parseFloat(b.size) - parseFloat(a.size));
+      fileItems.sort((a, b) => {
+        const sizeA = parseFloat(a.size);
+        const sizeB = parseFloat(b.size);
+        return sizeB - sizeA;
+      });
       createIconView();
       createNotification('Sorted by size');
     });
 
-    // ============ Properties Panel (Feature 6) ============
+    // ============ Properties Panel ============
     function updateProperties(name, size, date, type = '-') {
       document.getElementById('prop-name').textContent = name;
       document.getElementById('prop-size').textContent = size;
@@ -1203,7 +1224,8 @@
     }
 
     document.getElementById('properties-toggle').addEventListener('click', function() {
-      document.getElementById('properties-panel').classList.toggle('show');
+      const panel = document.getElementById('properties-panel');
+      panel.classList.toggle('show');
       this.classList.toggle('active');
     });
 
@@ -1211,25 +1233,17 @@
     function attachFileItemListeners(item) {
       item.addEventListener('click', function(e) {
         if (e.detail === 2) {
-          createNotification('Opening: ' + this.querySelector('.text').textContent);
+          createNotification('Opening: ' + this.querySelector('.text')?.textContent);
         } else {
           document.querySelectorAll('.file-item').forEach(i => i.classList.remove('selected'));
           this.classList.add('selected');
           updateProperties(
-            this.querySelector('.text').textContent,
+            this.querySelector('.text')?.textContent || '-',
             this.dataset.size || '-',
-            new Date().toLocaleDateString()
+            new Date().toLocaleDateString(),
+            this.dataset.type || '-'
           );
         }
-      });
-
-      item.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        selectedFile = this;
-        const menu = document.getElementById('context-menu');
-        menu.classList.add('show');
-        menu.style.left = e.pageX + 'px';
-        menu.style.top = e.pageY + 'px';
       });
     }
 
@@ -1245,7 +1259,7 @@
         var name = this.dataset.name || '';
         if (name.toLowerCase().indexOf('finder') !== -1) {
           var win = document.getElementById('finder-window');
-          if (win) { win.style.display = 'flex'; win.style.visibility = 'visible'; }
+          if (win) { win.style.display = 'flex'; win.style.visibility = 'visible'; focusWindow(win); }
           li.classList.add('running');
         }
         if (name.toLowerCase().indexOf('launchpad') !== -1) {
@@ -1253,20 +1267,24 @@
           if (p) {
             p.style.display = (p.style.display === 'flex') ? 'none' : 'flex';
             li.classList.toggle('running');
+            if (p.style.display === 'flex') focusWindow(p);
           }
         }
         if (name.toLowerCase().indexOf('terminal') !== -1) {
           var t = document.getElementById('terminal-window');
           if (t) {
             t.style.display = (t.style.display === 'flex') ? 'none' : 'flex';
-            document.getElementById('terminal-dock').classList.add('running');
-            document.getElementById('terminal-cmd').focus();
+            li.classList.toggle('running');
+            if (t.style.display === 'flex') {
+              focusWindow(t);
+              document.getElementById('terminal-cmd').focus();
+            }
           }
         }
       });
     });
 
-    // ============ Terminal (Feature 1) ============
+    // ============ Terminal ============
     const commands = {
       'help': 'Commands: ls, pwd, cd, clear, date, whoami, echo [text], help',
       'ls': 'Documents  Music  Pictures  Videos  specs.pdf  plan.xls  stuff.zip  project.js',
@@ -1309,20 +1327,13 @@
       }
     });
 
-    // ============ Text Editor (Feature 2) ============
-    document.getElementById('editor-bold').addEventListener('click', function() {
-      createNotification('Bold formatting applied');
-      this.classList.toggle('active');
-    });
-
-    document.getElementById('editor-italic').addEventListener('click', function() {
-      createNotification('Italic formatting applied');
-      this.classList.toggle('active');
-    });
-
-    document.getElementById('editor-underline').addEventListener('click', function() {
-      createNotification('Underline formatting applied');
-      this.classList.toggle('active');
+    // ============ Text Editor ============
+    ['editor-bold', 'editor-italic', 'editor-underline'].forEach(id => {
+      document.getElementById(id).addEventListener('click', function() {
+        this.classList.toggle('active');
+        const action = id.replace('editor-', '');
+        createNotification(action.charAt(0).toUpperCase() + action.slice(1) + ' formatting toggled');
+      });
     });
 
     // ============ Close Buttons ============
@@ -1346,7 +1357,7 @@
       document.getElementById('editor-dock').classList.remove('running');
     });
 
-    // ============ Window Dragging (Feature 14) ============
+    // ============ Window Dragging ============
     function makeDraggable(winId, headerId) {
       var win = document.getElementById(winId);
       var header = document.getElementById(headerId);
@@ -1354,6 +1365,7 @@
       var offsetX = 0, offsetY = 0, dragging = false;
 
       header.addEventListener('mousedown', function(e) {
+        if (e.target.closest('.close, .maximise, .minimise, .forward, .back')) return;
         dragging = true;
         focusWindow(win);
         var rect = win.getBoundingClientRect();
@@ -1392,19 +1404,13 @@
       }
     });
 
-    // ============ Keyboard Shortcuts (Feature 12) ============
+    // ============ Keyboard Shortcuts ============
     document.addEventListener('keydown', function(e){
       if (e.key === 'Escape') {
         document.getElementById('hint').style.display = 'none';
         document.getElementById('screensaver').style.display = 'none';
         document.getElementById('search-box').classList.remove('show');
       }
-    });
-
-    // ============ Hint Dialog ============
-    var closeHint = document.getElementById('close');
-    if (closeHint) closeHint.addEventListener('click', function(){
-      document.getElementById('hint').style.display = 'none';
     });
 
     // ============ Initialize ============
